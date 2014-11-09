@@ -1,0 +1,10 @@
+".autocomplete-plus input.hidden-input":
+  "tab": "autocomplete-plus:confirm"
+  "down": "autocomplete-plus:select-next"
+  "up": "autocomplete-plus:select-previous"
+  "escape": "autocomplete-plus:cancel"
+  "ctrl-n": "autocomplete-plus:select-next"
+  "ctrl-p": "autocomplete-plus:select-previous"
+
+".editor":
+  "ctrl-shift-space": "autocomplete-plus:activate"
