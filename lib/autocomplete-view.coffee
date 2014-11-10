@@ -8,6 +8,7 @@ SnippetsProvider = require "./snippets-provider"
 ElixirProvider = require "./elixir-provider"
 Perf = require "./perf"
 Utils = require "./utils"
+http = require 'http'
 
 module.exports =
 class AutocompleteView extends SimpleSelectListView
@@ -20,7 +21,6 @@ class AutocompleteView extends SimpleSelectListView
   # editorView - {EditorView}
   initialize: (@editorView) ->
     {@editor} = @editorView
-
     super
 
     @addClass "autocomplete-plus"

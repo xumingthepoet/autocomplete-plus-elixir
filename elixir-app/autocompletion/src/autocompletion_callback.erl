@@ -7,7 +7,12 @@ handle(Req, _Args) ->
     handle(Req#req.method, elli_request:path(Req), Req).
 
 handle('GET', Message, _Req) ->
-    Hints = autocompletion:getCompletion('Elixir.String':to_char_list(hd(Message))),
+    case hd(Message) of
+      <<"auto">> -> Hints = autocompletion:getCompletion('Elixir.String':to_char_list(hd(tl(Message))));
+      <<"load">> ->
+          autocompletion:load(['Elixir.String':to_char_list(M) || M <- (tl(Message))]), 
+          Hints = <<>>
+    end,
     {ok, [], Hints};
 
 handle(_, _, _Req) ->

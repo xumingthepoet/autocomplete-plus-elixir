@@ -2,6 +2,9 @@ _ = require "underscore-plus"
 AutocompleteView = require "./autocomplete-view"
 Provider = require "./provider"
 Suggestion = require "./suggestion"
+http = require 'http'
+
+{BufferedProcess} = require 'atom'
 
 module.exports =
   configDefaults:
@@ -13,8 +16,12 @@ module.exports =
   autocompleteViews: []
   editorSubscription: null
 
+  excutable: atom.packages.getPackageDirPaths() + '/autocomplete-plus/elixir-app/autocompletion/rel/autocompletion/bin/autocompletion'
+
   # Public: Creates AutocompleteView instances for all active and future editors
   activate: ->
+    # start iex
+    @start_iex()
     # If both autosave and autocomplete+'s auto-activation feature are enabled,
     # disable the auto-activation
     if atom.packages.isPackageLoaded("autosave") and
@@ -36,6 +43,22 @@ module.exports =
           autocompleteView.dispose()
           _.remove(@autocompleteViews, autocompleteView)
         @autocompleteViews.push(autocompleteView)
+
+  start_iex: ->
+
+    exit = (code) ->
+            console.log("command #{command} exited with #{code}")
+            get = http.get {host: "localhost", port: 3000, path: "/load/"+atom.project.path}, (res) =>
+              res.on 'end', () => console.log atom.project.path+" loaded"
+            get.end()
+
+    command = @excutable
+
+    args = []
+    args.push "start"
+
+    new BufferedProcess({command, args, exit})
+
 
   # Public: Cleans everything up, removes all AutocompleteView instances
   deactivate: ->

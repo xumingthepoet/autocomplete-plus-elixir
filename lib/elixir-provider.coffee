@@ -20,7 +20,7 @@ class ElixirProvider extends Provider
 
     words = ''
 
-    get = http.get {host: "localhost", port: 3000, path: "/"+prefix}, (res) =>
+    get = http.get {host: "localhost", port: 3000, path: "/auto/"+prefix}, (res) =>
             res.on 'data', (chunk) ->
               words += chunk.toString()
             res.on 'end', () =>

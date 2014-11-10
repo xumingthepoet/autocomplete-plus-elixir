@@ -7,6 +7,12 @@ defmodule :autocompletion do
     {:ok, _pid} = :elli.start_link([{:callback, :autocompletion_callback}, {:ip, {127,0,0,1}}, {:port, 3000}])
   end
 
+  def load path do
+    path = List.foldl path, '', fn e, acc -> :lists.append acc, [ ?/ | e] end
+    Logger.info path
+    for f <- :filelib.wildcard(path ++ '/_build/dev/lib/*/ebin') do Code.append_path(f) end
+  end
+
   def getCompletion prefix do
     {beforLastDot, afterD} = split_last_dot prefix
     getCompletion prefix, beforLastDot, afterD

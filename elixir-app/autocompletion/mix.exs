@@ -12,7 +12,7 @@ defmodule Autocompletion.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [:logger],
+    [applications: [:logger, :elli],
      mod: {:autocompletion, []}]
   end
 
@@ -26,6 +26,7 @@ defmodule Autocompletion.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    [{:elli, [git: "git://github.com/knutin/elli.git"]}]
+    [{:elli, [git: "git://github.com/knutin/elli.git"]},
+    {:exrm, "~> 0.14.10"}]
   end
 end
