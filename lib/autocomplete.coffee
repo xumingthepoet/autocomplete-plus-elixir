@@ -47,7 +47,7 @@ module.exports =
   start_iex: ->
 
     exit = (code) ->
-            console.log("command #{command} exited with #{code}")
+            #console.log("command #{command} exited with #{code}")
             get = http.get {host: "localhost", port: 3000, path: "/load/"+atom.project.path}, (res) =>
               res.on 'end', () => console.log atom.project.path+" loaded"
             get.end()
